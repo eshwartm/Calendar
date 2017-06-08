@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Calendar Appearance Delegate-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Calendar" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,60 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ob5-VB-vmk" customClass="CVCalendarMenuView" customModule="CVCalendar">
+                                <rect key="frame" x="0.0" y="20" width="375" height="24"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="X7Q-C8-o7R"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="menuViewDelegate" destination="BYZ-38-t0r" id="bHY-7r-tpu"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0K-GI-U02" customClass="CVCalendarView" customModule="CVCalendar">
+                                <rect key="frame" x="0.0" y="52" width="375" height="178"/>
+                                <color key="backgroundColor" red="0.29107515575318121" green="0.40781933069229126" blue="0.35274279185316687" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="178" id="cJp-I7-Eef"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="calendarAppearanceDelegate" destination="BYZ-38-t0r" id="dir-ot-uUF"/>
+                                    <outlet property="calendarDelegate" destination="BYZ-38-t0r" id="AQA-Fn-dOH"/>
+                                </connections>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l4x-6R-iZG">
+                                <rect key="frame" x="0.0" y="238" width="375" height="429"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="cFB-7J-yXf"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="VyU-Oi-EXO"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ob5-VB-vmk" secondAttribute="trailing" id="2J6-5K-84c"/>
+                            <constraint firstItem="Ob5-VB-vmk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2cV-Q5-Vpc"/>
+                            <constraint firstItem="l4x-6R-iZG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ktj-Ob-Rsw"/>
+                            <constraint firstAttribute="trailing" secondItem="X0K-GI-U02" secondAttribute="trailing" id="QYT-YE-unN"/>
+                            <constraint firstAttribute="trailing" secondItem="l4x-6R-iZG" secondAttribute="trailing" id="Smd-3e-ah1"/>
+                            <constraint firstItem="Ob5-VB-vmk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Wzh-lm-5Dp"/>
+                            <constraint firstItem="X0K-GI-U02" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eDc-u4-cUQ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l4x-6R-iZG" secondAttribute="bottom" id="n3N-L6-E8j"/>
+                            <constraint firstItem="l4x-6R-iZG" firstAttribute="top" secondItem="X0K-GI-U02" secondAttribute="bottom" constant="8" id="t2T-0f-DdJ"/>
+                            <constraint firstItem="X0K-GI-U02" firstAttribute="top" secondItem="Ob5-VB-vmk" secondAttribute="bottom" constant="8" id="yth-2e-rSx"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="agendaView" destination="l4x-6R-iZG" id="aeg-qF-Spa"/>
+                        <outlet property="calendarView" destination="X0K-GI-U02" id="Nt4-vP-Pd6"/>
+                        <outlet property="menuView" destination="Ob5-VB-vmk" id="Ahu-me-0I7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-79.200000000000003" y="138.98050974512745"/>
         </scene>
     </scenes>
 </document>
