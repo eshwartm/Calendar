@@ -138,6 +138,24 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
         let completeDateString = "\(cvDate.day) \(monthStr) \(cvDate.year)"
         selectDateInAgendaView(dateString: completeDateString)
         
+        let calendarPageTitle = "\(monthStr) \(cvDate.year)"
+        updateMonthAndYearTitle(monthAndYear: calendarPageTitle)
+    }
+    
+    func processMonthAndYearTitle(date:Date) -> String {
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        print("Processing day month and year from date")
+        
+        let month = dateComponents.month!
+        let year = dateComponents.year!
+        
+        let monthStr = getMonthFromIndex(monthIndex: month)
+        return "\(monthStr) \(year)"
+    }
+    
+    func updateMonthAndYearTitle(monthAndYear: String) {
+        self.title = monthAndYear
     }
     
     func getMonthFromIndex(monthIndex:Int) -> String {
@@ -246,6 +264,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         print(date!)
         
         selectDateOnCalendar(date: date!)
+        
+        let monthAndYear = processMonthAndYearTitle(date: date!)
+        updateMonthAndYearTitle(monthAndYear: monthAndYear)
     }
     
     func selectDateInAgendaView(dateString: String) {
@@ -264,21 +285,25 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         calendarView.toggleViewWithDate(date)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == agendaView {
+            
+        }
+    }
+    
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == agendaView {
             selectDateOnTopMostSection()
         }
     }
-    
-    /*func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == agendaView {
-            selectDateOnTopMostSection()
-        }
-    }*/
-    
+        
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == agendaView {
             selectDateOnTopMostSection()
+            if (calendarView.calendarMode == .monthView) {
+                let mode:CalendarMode = .weekView
+                calendarView.changeMode(mode)
+            }
         }
     }
     

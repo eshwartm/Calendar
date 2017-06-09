@@ -32,8 +32,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0K-GI-U02" customClass="CVCalendarView" customModule="CVCalendar">
-                                <rect key="frame" x="0.0" y="96" width="375" height="178"/>
-                                <color key="backgroundColor" red="0.29107515575318121" green="0.40781933069229126" blue="0.35274279185316687" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="178"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="178" id="cJp-I7-Eef"/>
                                 </constraints>
@@ -43,7 +42,7 @@
                                 </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l4x-6R-iZG">
-                                <rect key="frame" x="0.0" y="282" width="375" height="385"/>
+                                <rect key="frame" x="0.0" y="266" width="375" height="401"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="cFB-7J-yXf"/>
@@ -61,8 +60,8 @@
                             <constraint firstItem="Ob5-VB-vmk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Wzh-lm-5Dp"/>
                             <constraint firstItem="X0K-GI-U02" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eDc-u4-cUQ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="l4x-6R-iZG" secondAttribute="bottom" id="n3N-L6-E8j"/>
-                            <constraint firstItem="l4x-6R-iZG" firstAttribute="top" secondItem="X0K-GI-U02" secondAttribute="bottom" constant="8" id="t2T-0f-DdJ"/>
-                            <constraint firstItem="X0K-GI-U02" firstAttribute="top" secondItem="Ob5-VB-vmk" secondAttribute="bottom" constant="8" id="yth-2e-rSx"/>
+                            <constraint firstItem="l4x-6R-iZG" firstAttribute="top" secondItem="X0K-GI-U02" secondAttribute="bottom" id="t2T-0f-DdJ"/>
+                            <constraint firstItem="X0K-GI-U02" firstAttribute="top" secondItem="Ob5-VB-vmk" secondAttribute="bottom" id="yth-2e-rSx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6RW-bu-cwd"/>
