@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     
     fileprivate var randomNumberOfDotMarkersForDay = [Int]()
     
+    var selectedDay: CVCalendarDayView?
+    
     var dateArray:[String] = []
     
     override func viewDidLoad() {
@@ -39,22 +41,18 @@ class ViewController: UIViewController {
         dateFormatter.dateFormat = "dd MMM yyyy"
         
         let dateString = dateFormatter.string(from: currentDate)
-        print("Printing date string : ")
         print(dateString)
         
         dateArray = fetchDatesArray(dateString: dateString)
         
         let indexPath = IndexPath(row: 0, section: dateArray.count/2)
-        /*for str in dateArray {
-            if dateString == str {
-                indexPath = IndexPath(row: 0, section: index)
-                break;
-            }
-            index = index + 1
-        }*/
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.agendaView.scrollToRow(at: indexPath, at: .top, animated: false)
+            
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.agendaView.scrollToRow(at: indexPath, at: .top, animated: false)
+            self.selectDateOnTopMostSection()
         }
     }
 
@@ -97,11 +95,9 @@ class ViewController: UIViewController {
         for index in -1000...1000 {
             let calendar = Calendar.current
             let newDate = calendar.date(byAdding: .day, value: index, to: date!)
-            print("printing Date : ")
             print(newDate!)
             
             let dateString = dateFormatter.string(from: newDate!)
-            print("Printing date string : ")
             print(dateString)
             
             tempDateArray.append(dateString)
@@ -125,6 +121,54 @@ extension ViewController: CVCalendarViewDelegate, CVCalendarMenuViewDelegate {
     /// Required method to implement!
     func firstWeekday() -> Weekday {
         return .sunday
+    }
+    
+    func shouldAutoSelectDayOnMonthChange() -> Bool {
+        return false
+    }
+    
+    func didSelectDayView(_ dayView: CVCalendarDayView, animationDidFinish: Bool) {
+        selectedDay = dayView
+        print("Selected Date : ")
+        let cvDate = (selectedDay?.date)!
+        print("\(cvDate.day) \(cvDate.month) \(cvDate.year)")
+        
+        let monthStr = getMonthFromIndex(monthIndex: cvDate.month)
+        
+        let completeDateString = "\(cvDate.day) \(monthStr) \(cvDate.year)"
+        selectDateInAgendaView(dateString: completeDateString)
+        
+    }
+    
+    func getMonthFromIndex(monthIndex:Int) -> String {
+        switch monthIndex {
+        case 1:
+            return "Jan"
+        case 2:
+            return "Feb"
+        case 3:
+            return "Mar"
+        case 4:
+            return "Apr"
+        case 5:
+            return "May"
+        case 6:
+            return "Jun"
+        case 7:
+            return "Jul"
+        case 8:
+            return "Aug"
+        case 9:
+            return "Sep"
+        case 10:
+            return "Oct"
+        case 11:
+            return "Nov"
+        case 12:
+            return "Dec"
+        default:
+            return ""
+        }
     }
 }
 
@@ -186,34 +230,57 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func firstVisibleSection(indexPaths:[IndexPath]) -> String {
-        print("Indexpaths for visible rows : \(indexPaths[1].section)")
-        let dateString = dateArray[indexPaths[1].section]
+        let dateString = dateArray[indexPaths[0].section]
         return dateString
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == agendaView {
-            let visibleIndexPaths = agendaView.indexPathsForVisibleRows
-            let selectedDateString = firstVisibleSection(indexPaths: visibleIndexPaths!)
-            
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            let date = dateFormatter.date(from: selectedDateString)
-            print(date!)
-            
+    func selectDateOnTopMostSection() {
+        let visibleIndexPaths = self.agendaView.indexPathsForVisibleRows
+        let selectedDateString = self.firstVisibleSection(indexPaths: visibleIndexPaths!)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        var date = dateFormatter.date(from: selectedDateString)
+        date = dateFormatter.date(from: selectedDateString)
+        print(date!)
+        
+        selectDateOnCalendar(date: date!)
+    }
+    
+    func selectDateInAgendaView(dateString: String) {
+        if dateArray.count == 0 || dateString == "" {
+            return
+        }
+        let indexOfDate = dateArray.index{$0 == dateString}
+        if let index = indexOfDate {
+            print("Index of date string : \(index)")
+            let indexPath = IndexPath(row: 0, section: index)
+            self.agendaView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func selectDateOnCalendar(date:Date) {
+        calendarView.toggleViewWithDate(date)
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == agendaView {
-            let visibleIndexPaths = agendaView.indexPathsForVisibleRows
-            let selectedDateString = firstVisibleSection(indexPaths: visibleIndexPaths!)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            let date = dateFormatter.date(from: selectedDateString)
-            print(date!)
+            selectDateOnTopMostSection()
         }
     }
+    
+    /*func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == agendaView {
+            selectDateOnTopMostSection()
+        }
+    }*/
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == agendaView {
+            selectDateOnTopMostSection()
+        }
+    }
+    
 }
 
