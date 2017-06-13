@@ -1,12 +1,21 @@
 PODS:
-  - CVCalendar (1.5.0)
+  - HexColors (2.3.0)
+  - MJCalendar (0.4.0):
+    - NSDate-Escort (~> 1.5)
+    - UIView+JMFrame
+  - NSDate-Escort (1.8.2)
+  - UIView+JMFrame (0.1.2)
 
 DEPENDENCIES:
-  - CVCalendar (~> 1.5.0)
+  - HexColors (~> 2.3)
+  - MJCalendar
 
 SPEC CHECKSUMS:
-  CVCalendar: 5d51a7bda1b9439b612de69d86a91a73befa1936
+  HexColors: 6ad3947c3447a055a3aa8efa859def096351fe5f
+  MJCalendar: 3e131cebe205f5d3a8af251a8753a7f2070f4822
+  NSDate-Escort: c79db277a401c0ad219acd295ec17c7b4f61266f
+  UIView+JMFrame: a907974c9d34b1c300aef85ae2a1a5af746f2b8a
 
-PODFILE CHECKSUM: f4600ff34cc49689a14fbec66192c3dc2d05b6a0
+PODFILE CHECKSUM: f31a0733075aff554a11fc0335e2c90e0704cd24
 
 COCOAPODS: 1.2.1
