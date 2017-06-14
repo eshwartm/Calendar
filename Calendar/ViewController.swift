@@ -28,33 +28,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var calendarViewHeight: NSLayoutConstraint!
     
     var eventDict:[String:Any] = [
-            "December 13, 2016": [
+            "December 14, 2016": [
         
                 [
-                    "title": "Meet with AppUnfold",
+                    "title": "Go to Gym",
+                    "time" : "6:00 AM"
+                ],
+                [
+                    "title": "Meditation",
                     "time" : "8:00 PM"
                 ],
                 [
-                    "title": "Meet with AppUnfold",
+                    "title": "Something",
                     "time" : "8:00 PM"
                 ],
                 [
-                    "title": "Meet with AppUnfold",
-                    "time" : "8:00 PM"
-                ],
-                [
-                    "title": "Meet with AppUnfold",
+                    "title": "Meet with Jill",
                     "time" : "8:00 PM"
                 ]
             ],
-            "December 14, 2016": [
+            "December 15, 2016": [
                 
                 [
-                    "title": "Meet with AppUnfold",
+                    "title": "Meet with John",
                     "time" : "8:00 PM"
                 ],
                 [
-                    "title": "Meet with AppUnfold",
+                    "title": "Meet with Jack",
                     "time" : "8:00 PM"
                 ]
             ]
@@ -266,6 +266,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected event ")
+        let date = self.dateByIndex(indexPath.section)
+        self.dateFormatter.dateStyle = DateFormatter.Style.long
+        let dateString = self.dateFormatter.string(from: date)
+        // got date string from section
+        // now search by section in the dict
+        
+        if let events = eventDict[dateString] as? [[String:Any]] {
+            print(events[indexPath.row])
+        }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Prevent changing selected day when non user scroll is triggered.

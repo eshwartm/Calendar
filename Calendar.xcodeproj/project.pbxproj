@@ -119,12 +119,12 @@
 			children = (
 				73A729FE1EE6F0CD007BEF6D /* AppDelegate.swift */,
 				73A72A001EE6F0CD007BEF6D /* ViewController.swift */,
+				73A0E5C51EEFFC82004774BD /* EventDetailsViewController.swift */,
 				73A72A021EE6F0CD007BEF6D /* Main.storyboard */,
 				73A0E5C31EEEAFB2004774BD /* EventViewCell.swift */,
 				73A72A051EE6F0CD007BEF6D /* Assets.xcassets */,
 				73A72A071EE6F0CD007BEF6D /* LaunchScreen.storyboard */,
 				73A72A0A1EE6F0CD007BEF6D /* Info.plist */,
-				73A0E5C51EEFFC82004774BD /* EventDetailsViewController.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
