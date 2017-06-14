@@ -6,6 +6,6 @@ target 'Calendar' do
   use_frameworks!
 
   # Pods for Calendar
-  pod 'CVCalendar', '~> 1.5.0'
-
+  pod 'MJCalendar'
+  pod 'HexColors', '~> 2.3'
 end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73A0E5C41EEEAFB2004774BD /* EventViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0E5C31EEEAFB2004774BD /* EventViewCell.swift */; };
+		73A0E5C61EEFFC82004774BD /* EventDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A0E5C51EEFFC82004774BD /* EventDetailsViewController.swift */; };
 		73A729FF1EE6F0CD007BEF6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A729FE1EE6F0CD007BEF6D /* AppDelegate.swift */; };
 		73A72A011EE6F0CD007BEF6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A72A001EE6F0CD007BEF6D /* ViewController.swift */; };
 		73A72A041EE6F0CD007BEF6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A72A021EE6F0CD007BEF6D /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 /* Begin PBXFileReference section */
 		2B12F8981F51E38E32C99976 /* Pods_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D7B1CDD827CB351FDD91EC4 /* Pods-Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar/Pods-Calendar.release.xcconfig"; sourceTree = "<group>"; };
+		73A0E5C31EEEAFB2004774BD /* EventViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewCell.swift; sourceTree = "<group>"; };
+		73A0E5C51EEFFC82004774BD /* EventDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsViewController.swift; sourceTree = "<group>"; };
 		73A729FB1EE6F0CD007BEF6D /* Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A729FE1EE6F0CD007BEF6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73A72A001EE6F0CD007BEF6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,7 +119,9 @@
 			children = (
 				73A729FE1EE6F0CD007BEF6D /* AppDelegate.swift */,
 				73A72A001EE6F0CD007BEF6D /* ViewController.swift */,
+				73A0E5C51EEFFC82004774BD /* EventDetailsViewController.swift */,
 				73A72A021EE6F0CD007BEF6D /* Main.storyboard */,
+				73A0E5C31EEEAFB2004774BD /* EventViewCell.swift */,
 				73A72A051EE6F0CD007BEF6D /* Assets.xcassets */,
 				73A72A071EE6F0CD007BEF6D /* LaunchScreen.storyboard */,
 				73A72A0A1EE6F0CD007BEF6D /* Info.plist */,
@@ -337,8 +343,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73A0E5C61EEFFC82004774BD /* EventDetailsViewController.swift in Sources */,
 				73A72A011EE6F0CD007BEF6D /* ViewController.swift in Sources */,
 				73A729FF1EE6F0CD007BEF6D /* AppDelegate.swift in Sources */,
+				73A0E5C41EEEAFB2004774BD /* EventViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +601,7 @@
 				73A72A251EE6F0CE007BEF6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73A72A261EE6F0CE007BEF6D /* Build configuration list for PBXNativeTarget "CalendarTests" */ = {
 			isa = XCConfigurationList;
@@ -601,6 +610,7 @@
 				73A72A281EE6F0CE007BEF6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73A72A291EE6F0CE007BEF6D /* Build configuration list for PBXNativeTarget "CalendarUITests" */ = {
 			isa = XCConfigurationList;
@@ -609,6 +619,7 @@
 				73A72A2B1EE6F0CE007BEF6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
