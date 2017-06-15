@@ -19,7 +19,7 @@ struct DayColors {
 }
 
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MJCalendarViewDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var calendarView: MJCalendarView!
     
@@ -27,35 +27,43 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var calendarViewHeight: NSLayoutConstraint!
     
+    var selectedObj:[String:Any]?
+    
     var eventDict:[String:Any] = [
-            "December 14, 2016": [
+            "June 15, 2017": [
         
                 [
                     "title": "Go to Gym",
-                    "time" : "6:00 AM"
+                    "time" : "6:00 AM",
+                    "description":"Something something"
                 ],
                 [
                     "title": "Meditation",
-                    "time" : "8:00 PM"
+                    "time" : "8:00 PM",
+                    "description":"Something something"
                 ],
                 [
                     "title": "Something",
-                    "time" : "8:00 PM"
+                    "time" : "8:00 PM",
+                    "description":"Something something"
                 ],
                 [
                     "title": "Meet with Jill",
-                    "time" : "8:00 PM"
+                    "time" : "8:00 PM",
+                    "description":"Something something"
                 ]
             ],
-            "December 15, 2016": [
+            "June 16, 2017": [
                 
                 [
                     "title": "Meet with John",
-                    "time" : "8:00 PM"
+                    "time" : "8:00 PM",
+                    "description":"Something something"
                 ],
                 [
                     "title": "Meet with Jack",
-                    "time" : "8:00 PM"
+                    "time" : "8:00 PM",
+                    "description":"Something something"
                 ]
             ]
     ]
@@ -82,7 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.dateFormatter = DateFormatter()
         self.setTitleWithDate(Date())
         
-        tableView.register(EventViewCell.self, forCellReuseIdentifier:EVENT_CELL_ID)
+        tableView.register(EventListCell.self, forCellReuseIdentifier:EVENT_CELL_ID)
         
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -102,7 +110,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func setUpCalendarConfiguration() {
         self.calendarView.calendarDelegate = self
         
@@ -203,8 +211,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func scrollTableViewToDate(_ date: Date) {
-        if let row = self.indexByDate(date) {
-            let indexPath = IndexPath(row: row, section: 0)
+        if let section = self.indexByDate(date) {
+            let indexPath = IndexPath(row: 0, section: section)
             self.tableView.setContentOffset(self.tableView.contentOffset, animated: false)
             self.isScrollingAnimation = true
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
@@ -220,6 +228,37 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return nil
         }
     }
+    
+    func animateToPeriod(_ period: MJConfiguration.PeriodType) {
+        self.tableView.setContentOffset(self.tableView.contentOffset, animated: false)
+        
+        self.calendarView.animateToPeriodType(period, duration: 0.2, animations: { (calendarHeight) -> Void in
+            // In animation block you can add your own animation. To adapat UI to new calendar height you can use calendarHeight param
+            self.calendarViewHeight.constant = calendarHeight
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func switchCalendarToMonthView() {
+        if calendarView.configuration.periodType == .twoWeeks {
+            self.animateToPeriod(.month)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EventDetail" {
+            let detailVC = segue.destination as! EventDetailsTableViewController
+//            let detailVC = storyboard?.instantiateViewController(withIdentifier: "EventDetailsVC") as! EventDetailsTableViewController
+            if let selectedObject = selectedObj {
+                detailVC.eventDetailObject = [:]
+                detailVC.eventDetailObject = selectedObj
+            }
+            
+        }
+    }
+}
+    
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.daysRange
@@ -246,7 +285,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: EVENT_CELL_ID, for: indexPath) as! EventViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: EVENT_CELL_ID, for: indexPath) as! EventListCell
         
         let date = self.dateByIndex(indexPath.section)
         self.dateFormatter.dateStyle = DateFormatter.Style.long
@@ -268,7 +307,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected event ")
         let date = self.dateByIndex(indexPath.section)
         self.dateFormatter.dateStyle = DateFormatter.Style.long
         let dateString = self.dateFormatter.string(from: date)
@@ -276,8 +314,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // now search by section in the dict
         
         if let events = eventDict[dateString] as? [[String:Any]] {
-            print(events[indexPath.row])
+            selectedObj = [:]
+            selectedObj = events[indexPath.row]
+            performSegue(withIdentifier: "EventDetail", sender: nil)
         }
+        
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -303,22 +345,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.isScrollingAnimation = false
-    }
-
-    func animateToPeriod(_ period: MJConfiguration.PeriodType) {
-        self.tableView.setContentOffset(self.tableView.contentOffset, animated: false)
-        
-        self.calendarView.animateToPeriodType(period, duration: 0.2, animations: { (calendarHeight) -> Void in
-            // In animation block you can add your own animation. To adapat UI to new calendar height you can use calendarHeight param
-            self.calendarViewHeight.constant = calendarHeight
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    func switchCalendarToMonthView() {
-        if calendarView.configuration.periodType == .twoWeeks {
-            self.animateToPeriod(.month)
-        }
     }
 }
 

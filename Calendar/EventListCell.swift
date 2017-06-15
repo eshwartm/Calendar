@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventViewCell: UITableViewCell {
+class EventListCell: UITableViewCell {
     
     var eventTimeLabel:UILabel = UILabel()
     var eventTitleLabel:UILabel = UILabel()
