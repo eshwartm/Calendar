@@ -35,22 +35,26 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
                 [
                     "title": "Go to Gym",
                     "time" : "6:00 AM",
-                    "description":"Something something"
+                    "description":"Have a good work out",
+                    "duration":"1h"
                 ],
                 [
                     "title": "Meditation",
                     "time" : "8:00 PM",
-                    "description":"Something something"
+                    "description":"Soothe yourself and relax",
+                    "duration":"30m"
                 ],
                 [
                     "title": "Something",
                     "time" : "8:00 PM",
-                    "description":"Something something"
+                    "description":"Something something",
+                    "duration":"30m"
                 ],
                 [
                     "title": "Meet with Jill",
                     "time" : "8:00 PM",
-                    "description":"Something something"
+                    "description":"Chalk out a great business plan and come up with future market alteration strategies",
+                    "duration":"15m"
                 ]
             ],
             "June 16, 2017": [
@@ -58,12 +62,14 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
                 [
                     "title": "Meet with John",
                     "time" : "8:00 PM",
-                    "description":"Something something"
+                    "description":"Talk about future investments and interview some possible candidates for upheaval",
+                    "duration":"30m"
                 ],
                 [
                     "title": "Meet with Jack",
                     "time" : "8:00 PM",
-                    "description":"Something something"
+                    "description":"Be the Chief Guest at Growth Inc., talk about the present market and growth potential and about being a professional",
+                    "duration":"15m"
                 ]
             ]
     ]
