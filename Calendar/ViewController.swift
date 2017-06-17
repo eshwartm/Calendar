@@ -10,6 +10,7 @@ import UIKit
 import NSDate_Escort
 import MJCalendar
 import HexColors
+import CoreLocation
 
 let EVENT_CELL_ID = "EventCellIdentifier"
 
@@ -18,6 +19,7 @@ struct DayColors {
     var textColor: UIColor
 }
 
+let DATE_FORMAT = "MMMM dd, YYYY"
 
 class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecognizerDelegate {
 
@@ -26,6 +28,8 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var calendarViewHeight: NSLayoutConstraint!
+    
+    var locationManager: CLLocationManager?
     
     var selectedObj:[String:Any]?
     
@@ -110,6 +114,8 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
         swipeGestureRecognizerDown.delegate = self
         swipeGestureRecognizerDown.direction = .down
         calendarView.addGestureRecognizer(swipeGestureRecognizerDown)
+        
+        startStandardLocationUpdates()
     }
 
     override func didReceiveMemoryWarning() {
@@ -193,7 +199,7 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
     }
     
     func setTitleWithDate(_ date: Date) {
-        self.dateFormatter.dateFormat = "MMMM yy"
+        dateFormatter.dateFormat = DATE_FORMAT
         self.navigationItem.title = self.dateFormatter.string(from: date)
     }
 
@@ -273,7 +279,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let date = self.dateByIndex(section)
-        self.dateFormatter.dateStyle = DateFormatter.Style.long
+        dateFormatter.dateFormat = DATE_FORMAT
         let dateString = self.dateFormatter.string(from: date)
         
         if let events = eventDict[dateString] as? [[String:Any]] {
@@ -284,7 +290,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let date = self.dateByIndex(section)
-        self.dateFormatter.dateStyle = DateFormatter.Style.long
+        dateFormatter.dateFormat = DATE_FORMAT
         let dateString = self.dateFormatter.string(from: date)
         return dateString
     }
@@ -294,7 +300,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: EVENT_CELL_ID, for: indexPath) as! EventListCell
         
         let date = self.dateByIndex(indexPath.section)
-        self.dateFormatter.dateStyle = DateFormatter.Style.long
+        
+        dateFormatter.dateFormat = DATE_FORMAT
         let dateString = self.dateFormatter.string(from: date)
         // got date string from section
         // now search by section in the dict
@@ -314,7 +321,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let date = self.dateByIndex(indexPath.section)
-        self.dateFormatter.dateStyle = DateFormatter.Style.long
+        dateFormatter.dateFormat = DATE_FORMAT
         let dateString = self.dateFormatter.string(from: date)
         // got date string from section
         // now search by section in the dict
@@ -351,6 +358,26 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         self.isScrollingAnimation = false
+    }
+}
+
+extension ViewController: CLLocationManagerDelegate {
+    func startStandardLocationUpdates() {
+        if locationManager == nil {
+            locationManager = CLLocationManager()
+        }
+        
+        let locationAuthorization = CLLocationManager.authorizationStatus()
+        if locationAuthorization == .notDetermined || locationAuthorization == .denied || locationAuthorization == .restricted {
+            locationManager?.requestWhenInUseAuthorization()
+        }
+        
+        locationManager?.delegate = self
+        locationManager?.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
     }
 }
 
