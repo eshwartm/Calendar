@@ -29,50 +29,7 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
     
     var selectedObj:[String:Any]?
     
-    var eventDict:[String:Any] = [
-            "June 15, 2017": [
-        
-                [
-                    "title": "Go to Gym",
-                    "time" : "6:00 AM",
-                    "description":"Have a good work out",
-                    "duration":"1h"
-                ],
-                [
-                    "title": "Meditation",
-                    "time" : "8:00 PM",
-                    "description":"Soothe yourself and relax",
-                    "duration":"30m"
-                ],
-                [
-                    "title": "Something",
-                    "time" : "8:00 PM",
-                    "description":"Something something",
-                    "duration":"30m"
-                ],
-                [
-                    "title": "Meet with Jill",
-                    "time" : "8:00 PM",
-                    "description":"Chalk out a great business plan and come up with future market alteration strategies",
-                    "duration":"15m"
-                ]
-            ],
-            "June 16, 2017": [
-                
-                [
-                    "title": "Meet with John",
-                    "time" : "8:00 PM",
-                    "description":"Talk about future investments and interview some possible candidates for upheaval",
-                    "duration":"30m"
-                ],
-                [
-                    "title": "Meet with Jack",
-                    "time" : "8:00 PM",
-                    "description":"Be the Chief Guest at Growth Inc., talk about the present market and growth potential and about being a professional",
-                    "duration":"15m"
-                ]
-            ]
-    ]
+    var eventDict:[String:Any]?
     
     var dayColors = Dictionary<Date, DayColors>()
     var dateFormatter: DateFormatter!
@@ -90,6 +47,11 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let filePath = Bundle.main.path(forResource: "Events", ofType: "json")
+        let url = URL(fileURLWithPath: filePath!)
+        let data = try! Data(contentsOf: url)
+        eventDict = try! JSONSerialization.jsonObject(with: data, options: [.mutableLeaves, .mutableContainers]) as! [String:Any]
         
         self.setUpCalendarConfiguration()
         
@@ -235,6 +197,13 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
         }
     }
     
+    @IBAction func addEvent(_ sender: UIBarButtonItem) {
+        if let storyb = storyboard {
+            let addEditNavVC = storyb.instantiateViewController(withIdentifier: "AddEditNavigationController") as! UINavigationController
+            present(addEditNavVC, animated: true, completion: nil)
+        }
+    }
+    
     func animateToPeriod(_ period: MJConfiguration.PeriodType) {
         self.tableView.setContentOffset(self.tableView.contentOffset, animated: false)
         
@@ -254,10 +223,9 @@ class ViewController: UIViewController, MJCalendarViewDelegate, UIGestureRecogni
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EventDetail" {
             let detailVC = segue.destination as! EventDetailsTableViewController
-//            let detailVC = storyboard?.instantiateViewController(withIdentifier: "EventDetailsVC") as! EventDetailsTableViewController
             if let selectedObject = selectedObj {
                 detailVC.eventDetailObject = [:]
-                detailVC.eventDetailObject = selectedObj
+                detailVC.eventDetailObject = selectedObject
             }
             
         }
@@ -276,7 +244,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         self.dateFormatter.dateStyle = DateFormatter.Style.long
         let dateString = self.dateFormatter.string(from: date)
         
-        if let events = eventDict[dateString] as? [[String:Any]] {
+        if let events = eventDict?[dateString] as? [[String:Any]] {
             return events.count
         }
         return 1
@@ -299,8 +267,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         // got date string from section
         // now search by section in the dict
         
-        if let events = eventDict[dateString] as? [[String:Any]] {
-            cell.eventTimeLabel.text = events[indexPath.row]["time"] as? String
+        if let events = eventDict?[dateString] as? [[String:Any]] {
+            if let startTime = events[indexPath.row]["start_time"] as? String, let endTime = events[indexPath.row]["end_time"] as? String {
+                let timeString = "\(startTime) - \(endTime) "
+                cell.eventTimeLabel.text = timeString
+            }
             cell.eventTitleLabel.text = events[indexPath.row]["title"] as? String
         } else {
             cell.eventTimeLabel.text = ""
@@ -319,7 +290,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         // got date string from section
         // now search by section in the dict
         
-        if let events = eventDict[dateString] as? [[String:Any]] {
+        if let events = eventDict?[dateString] as? [[String:Any]] {
             selectedObj = [:]
             selectedObj = events[indexPath.row]
             performSegue(withIdentifier: "EventDetail", sender: nil)

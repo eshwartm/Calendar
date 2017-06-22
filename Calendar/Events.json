@@ -1,0 +1,83 @@
+{
+    "June 15, 2017": [
+                  
+                      {
+                      "title": "Go to Gym",
+                      "start_time" : "6:00 AM",
+                      "end_time": "7:00 AM",
+                      "description":"Have a good work out",
+                      "duration":"1h"
+                      },
+                      {
+                      "title": "Meditation",
+                      "start_time" : "8:00 PM",
+                      "end_time": "8:30 PM",
+                      "description":"Soothe yourself and relax",
+                      "duration":"30m"
+                      },
+                      {
+                      "title": "Something",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:30 PM",
+                      "description":"Something something",
+                      "duration":"30m"
+                      },
+                      {
+                      "title": "Meet with Jill",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:15 PM",
+                      "description":"Chalk out a great business plan and come up with future market alteration strategies",
+                      "duration":"15m"
+                      }
+                  ],
+    "June 16, 2017": [
+                      
+                      {
+                      "title": "Meet with John",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:30 PM",
+                      "description":"Talk about future investments and interview some possible candidates for upheaval",
+                      "duration":"30m"
+                      },
+                      {
+                      "title": "Meet with Jack",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:15 PM",
+                      "description":"Be the Chief Guest at Growth Inc., talk about the present market and growth potential and about being a professional",
+                      "duration":"15m"
+                      }
+                    ],
+    "June 20, 2017": [
+                      {
+                      "title": "Meet with John",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:30 PM",
+                      "description":"Talk about future investments and interview some possible candidates for upheaval",
+                      "duration":"30m"
+                      }
+                    ],
+    "June 21, 2017": [
+                      {
+                      "title": "Meet with John",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:30 PM",
+                      "description":"Talk about future investments and interview some possible candidates for upheaval",
+                      "duration":"30m"
+                      },
+                      {
+                      "title": "Something",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:30 PM",
+                      "description":"Something something",
+                      "duration":"30m"
+                      },
+                      {
+                      "title": "Meet with Jill",
+                      "start_time" : "8:00 PM",
+                      "end_time" : "8:15 PM",
+                      "description":"Chalk out a great business plan and come up with future market alteration strategies",
+                      "duration":"15m"
+                      }
+                    ]
+                      
+}
